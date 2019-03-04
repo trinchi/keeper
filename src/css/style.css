@@ -1,0 +1,5 @@
+html {
+    height: 15px;
+    
+    -webkit-app-region: drag;
+}

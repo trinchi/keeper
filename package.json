@@ -1,0 +1,42 @@
+{
+  "name": "keeper",
+  "version": "0.0.1",
+  "description": "A electron application that shows a webview for keep.google.com",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder",
+    "dist": "electron-builder --win",
+    "publish": "electron-builder --win --mac --linux -p onTagOrDraft"
+  },
+  "author": "David Trinchi",
+  "license": "ISC",
+  "repository": "https://github.com/trinchi/keeper",
+  "dependencies": {
+    "electron-log": "^3.0.1",
+    "electron-updater": "^4.0.6"
+  },
+  "devDependencies": {
+    "electron": "^4.0.6",
+    "electron-builder": "^20.38.5"
+  },
+  "build": {
+    "appId": "io.trinchi.keeper",
+    "productName": "Keeper",
+    "publish": {
+      "provider": "github",
+      "releaseType": "release"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": ["dmg", "zip"]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": true
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  }
+}
