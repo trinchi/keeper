@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron .",
     "pack": "electron-builder",
-    "dist": "electron-builder --win",
+    "dist": "electron-builder --win --mac --linux",
     "publish": "electron-builder --win --mac --linux -p onTagOrDraft"
   },
   "author": "David Trinchi",
