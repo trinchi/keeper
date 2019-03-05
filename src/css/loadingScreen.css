@@ -6,6 +6,6 @@ img {
     width: 250px;
     height: 250px;
 
-    margin-top: -125px; /* Half the height */
-    margin-left: -125px; /* Half the width */
+    margin-top: -125px;
+    margin-left: -125px;
 }

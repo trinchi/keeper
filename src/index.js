@@ -1,10 +1,10 @@
 const {app, BrowserView, BrowserWindow} = require('electron');
+const {autoUpdater} = require('electron-updater');
 const settings = require('../res/settings');
 const path = require('path');
-const {autoUpdater} = require("electron-updater");
 
-autoUpdater.logger = require("electron-log");
-autoUpdater.logger.transports.file.level = "info";
+autoUpdater.logger = require('electron-log');
+autoUpdater.logger.transports.file.level = 'info';
 
 let mainWindow;
 let loadingScreen;
@@ -16,7 +16,7 @@ function createWindow() {
         minHeight: 600,
         width: 900,
         height: 600,
-        titleBarStyle: "hidden",
+        titleBarStyle: 'hidden',
         show: false
     });
 
@@ -54,9 +54,9 @@ function createWindow() {
     });
 
     setTimeout( () => {
-        loadingScreen.hide();
+        loadingScreen.close();
         mainWindow.show();
-    }, 2000);
+    }, 3000);
 
 }
 
