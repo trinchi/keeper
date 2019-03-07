@@ -1,13 +1,16 @@
 {
   "name": "keeper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A electron application that shows a webview for keep.google.com",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron .",
-    "pack": "electron-builder",
-    "dist": "electron-builder --win --mac --linux",
-    "publish": "electron-builder --win --mac --linux -p onTagOrDraft"
+    "less": "npx lessc src/style/less/style.less --clean-css tmp/style.min.css",
+    "start": "npm run less && electron .",
+    "build-macos": "npm run less && electron-builder --mac",
+    "build-win": "npm run less && electron-builder --win",
+    "build-linux": "npm run less && electron-builder --linux",
+    "package": "npm run less && electron-builder --win --mac --linux",
+    "publish": "npm run less && electron-builder --win --mac --linux -p onTagOrDraft"
   },
   "author": "David Trinchi",
   "license": "ISC",
@@ -19,7 +22,9 @@
   },
   "devDependencies": {
     "electron": "^4.0.6",
-    "electron-builder": "^20.38.5"
+    "electron-builder": "^20.38.5",
+    "less": "^3.9.0",
+    "less-plugin-clean-css": "^1.5.1"
   },
   "build": {
     "appId": "io.trinchi.keeper",
