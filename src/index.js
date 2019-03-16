@@ -33,7 +33,7 @@ function createWindow() {
     mainWindow.setBrowserView(browserView);
 
     // Open the DevTools.
-    //mainWindow.webContents.openDevTools({mode:'undocked'});
+    mainWindow.webContents.openDevTools({mode:'undocked'});
 
     browserView.setAutoResize({
         width: true,
@@ -45,18 +45,13 @@ function createWindow() {
         y: 20,
         width: 900,
         height: 580
-    });
+});
 
     browserView.webContents.loadURL(settings.url);
 
     mainWindow.on('closed', () => {
         mainWindow = null
     });
-
-    setTimeout( () => {
-        loadingScreen.close();
-        mainWindow.show();
-    }, 3000);
 
 }
 
@@ -69,6 +64,15 @@ function createLoadingScreen() {
     });
 
     loadingScreen.loadURL(path.join('file://', __dirname, '/loadingScreen.html'));
+
+    loadingScreen.on('closed', () => {
+        loadingScreen = null
+    });
+
+    setTimeout( () => {
+        loadingScreen.close();
+        mainWindow.show();
+    }, 3000);
 }
 
 app.on('ready', createLoadingScreen);
@@ -85,9 +89,8 @@ app.on('window-all-closed', function() {
 });
 
 app.on('activate', function() {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
+        createLoadingScreen();
         createWindow();
     }
 });
