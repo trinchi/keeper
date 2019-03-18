@@ -33,7 +33,7 @@ function createWindow() {
     mainWindow.setBrowserView(browserView);
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools({mode:'undocked'});
+    //mainWindow.webContents.openDevTools({mode:'undocked'});
 
     browserView.setAutoResize({
         width: true,
