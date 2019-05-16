@@ -1,13 +1,14 @@
-const {app, BrowserView, BrowserWindow} = require('electron');
-const {autoUpdater} = require('electron-updater');
-const settings = require('../res/settings');
-const path = require('path');
+import { app, BrowserView, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import settings from './resources/settings.json';
+import * as path from 'path';
 
-autoUpdater.logger = require('electron-log');
-autoUpdater.logger.transports.file.level = 'info';
+const log = require('electron-log');
+log.transports.file.level = "info";
+autoUpdater.logger = log;
 
-let mainWindow;
-let loadingScreen;
+let mainWindow: Electron.BrowserWindow;
+let loadingScreen: Electron.BrowserWindow;
 
 function createWindow() {
 
@@ -27,7 +28,7 @@ function createWindow() {
     });
 
     if (process.platform === 'darwin') {
-        mainWindow.loadURL(path.join('file://', __dirname, '/titleBar.html'));
+        mainWindow.loadURL(path.join('file://', __dirname, '../src/titleBar.html'));
     }
 
     mainWindow.setBrowserView(browserView);
@@ -45,14 +46,13 @@ function createWindow() {
         y: 20,
         width: 900,
         height: 580
-});
+    });
 
     browserView.webContents.loadURL(settings.url);
 
     mainWindow.on('closed', () => {
         mainWindow = null
     });
-
 }
 
 function createLoadingScreen() {
@@ -63,32 +63,32 @@ function createLoadingScreen() {
         frame: false
     });
 
-    loadingScreen.loadURL(path.join('file://', __dirname, '/loadingScreen.html'));
+    loadingScreen.loadURL(path.join('file://', __dirname, '../src/loadingScreen.html'));
 
     loadingScreen.on('closed', () => {
         loadingScreen = null
     });
 
-    setTimeout( () => {
+    setTimeout(() => {
         loadingScreen.close();
         mainWindow.show();
     }, 3000);
 }
 
 app.on('ready', createLoadingScreen);
-app.on('ready', createWindow);
+app.on("ready", createWindow);
 
-app.on('ready', function() {
+app.on('ready', function () {
     autoUpdater.checkForUpdatesAndNotify();
 });
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', function () {
     if (process.platform !== 'darwin') {
         app.quit()
     }
 });
 
-app.on('activate', function() {
+app.on('activate', function () {
     if (mainWindow === null) {
         createLoadingScreen();
         createWindow();
