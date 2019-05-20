@@ -6,7 +6,6 @@
     "outDir": "out",
     "baseUrl": ".",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
     "paths": {
       "*": ["node_modules/*"]
     }

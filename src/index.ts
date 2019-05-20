@@ -1,6 +1,6 @@
 import { app, BrowserView, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import settings from './resources/settings.json';
+import * as settings from '../resources/settings.json';
 import * as path from 'path';
 
 const log = require('electron-log');
