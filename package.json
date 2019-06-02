@@ -3,15 +3,15 @@
   "version": "1.0.4",
   "description": "A electron application that shows a webview for keep.google.com",
   "scripts": {
-    "less": "npx lessc src/styles/less/style.less --clean-css out/style/css/style.min.css",
+    "less": "npx lessc src/styles/less/style.less --clean-css out/styles/css/style.min.css",
     "tsc": "tsc",
     "build": "npm run less && npm run tsc",
     "start": "npm run build && electron ./out/index.js",
     "build-macos": "npm run build && electron-builder --mac",
     "build-win": "npm run build && electron-builder --win",
     "build-linux": "npm run build && electron-builder --linux",
-    "package": "npm run build && electron-builder --win --mac --linux",
-    "publish": "npm run build && electron-builder --win --mac --linux -p onTagOrDraft"
+    "package": "npm run build && electron-builder --mac",
+    "publish": "npm run build && electron-builder --mac-p onTagOrDraft"
   },
   "author": "David Trinchi",
   "license": "ISC",
