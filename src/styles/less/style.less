@@ -1,2 +1,24 @@
 @import "loadingScreen";
-@import "titleBar";
+
+body {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+
+    .titleBar {
+        height: 20px;
+        background-color: #F2B52C;
+        -webkit-app-region: drag;
+    }
+
+    .webview {
+        width: 100%;
+        height: 100%;
+    }
+}
+

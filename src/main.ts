@@ -1,5 +1,5 @@
-import { app, BrowserView, BrowserWindow } from 'electron';
-import { autoUpdater } from 'electron-updater';
+import {app, BrowserView, BrowserWindow, ipcMain} from 'electron';
+import {autoUpdater} from 'electron-updater';
 import * as settings from './settings.json';
 import * as path from 'path';
 
@@ -21,34 +21,15 @@ function createWindow() {
         show: false
     });
 
-    let browserView = new BrowserView({
-        webPreferences: {
-            nodeIntegration: false
-        }
-    });
-
-    if (process.platform === 'darwin') {
-        mainWindow.loadURL(path.join('file://', __dirname, '../src/titleBar.html'));
-    }
-
-    mainWindow.setBrowserView(browserView);
+    mainWindow.loadURL(path.join('file://', __dirname, '../src/main.html'));
 
     // Open the DevTools.
-    //mainWindow.webContents.openDevTools({mode:'undocked'});
+    mainWindow.webContents.openDevTools({mode: 'undocked'});
 
-    browserView.setAutoResize({
-        width: true,
-        height: true
+    ipcMain.on('main-window-finished-loading', () => {
+        loadingScreen.close();
+        mainWindow.show();
     });
-
-    browserView.setBounds({
-        x: 0,
-        y: 20,
-        width: 900,
-        height: 580
-    });
-
-    browserView.webContents.loadURL(settings.url);
 
     mainWindow.on('closed', () => {
         mainWindow = null
@@ -68,11 +49,6 @@ function createLoadingScreen() {
     loadingScreen.on('closed', () => {
         loadingScreen = null
     });
-
-    setTimeout(() => {
-        loadingScreen.close();
-        mainWindow.show();
-    }, 3000);
 }
 
 app.on('ready', createLoadingScreen);
