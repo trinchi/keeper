@@ -1,5 +1,5 @@
-import {app, BrowserView, BrowserWindow, ipcMain} from 'electron';
-import {autoUpdater} from 'electron-updater';
+import { app, BrowserWindow, ipcMain, Menu, MenuItemConstructorOptions } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import * as settings from './settings.json';
 import * as path from 'path';
 
@@ -11,6 +11,30 @@ let mainWindow: Electron.BrowserWindow;
 let loadingScreen: Electron.BrowserWindow;
 
 function createWindow() {
+    const menuTemplate: MenuItemConstructorOptions[] = [{
+        label: 'Application',
+        submenu: [
+            {label: 'About Application', role: 'about'},
+            {type: 'separator',},
+            {
+                label: 'Quit', accelerator: 'Command+Q',
+                click: () => {
+                    app.quit();
+                }
+            }
+        ]
+    }, {
+        label: 'Edit',
+        submenu: [
+            {label: 'Undo', accelerator: 'CmdOrCtrl+Z', role: 'undo'},
+            {label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', role: 'redo'},
+            {type: 'separator'},
+            {label: 'Cut', accelerator: 'CmdOrCtrl+X', role: 'cut'},
+            {label: 'Copy', accelerator: 'CmdOrCtrl+C', role: 'copy'},
+            {label: 'Paste', accelerator: 'CmdOrCtrl+V', role: 'paste'},
+            {label: 'Select All', accelerator: 'CmdOrCtrl+A', role: 'selectAll'},
+        ],
+    }];
 
     mainWindow = new BrowserWindow({
         minWidth: 900,
@@ -24,16 +48,17 @@ function createWindow() {
     mainWindow.loadURL(path.join('file://', __dirname, '../src/main.html'));
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools({mode: 'undocked'});
+    //mainWindow.webContents.openDevTools({mode: 'undocked'});
 
     ipcMain.on('main-window-finished-loading', () => {
         loadingScreen.close();
         mainWindow.show();
     });
-
     mainWindow.on('closed', () => {
         mainWindow = null
     });
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menuTemplate));
 }
 
 function createLoadingScreen() {
