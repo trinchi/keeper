@@ -51,7 +51,9 @@ function createWindow() {
     //mainWindow.webContents.openDevTools({mode: 'undocked'});
 
     ipcMain.on('main-window-finished-loading', () => {
-        loadingScreen.close();
+        if (loadingScreen) {
+            loadingScreen.close();
+        }
         mainWindow.show();
     });
     mainWindow.on('closed', () => {
