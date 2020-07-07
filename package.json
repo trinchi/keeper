@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@types/semver": "^6.0.0",
-    "electron": "^4.0.6",
+    "electron": "^7.2.4",
     "electron-builder": "^20.38.5",
     "less": "^3.9.0",
     "less-plugin-clean-css": "^1.5.1",
